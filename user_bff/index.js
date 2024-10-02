@@ -1,7 +1,9 @@
 const express = require('express');
 const cors = require('cors');
+const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const userRoutes = require('./src/routes/userRoutes.js');
+const authMiddleware = require('./middleware/authMiddleware');
 
 const corsOptions = {
     origin: (origin, callback) => {

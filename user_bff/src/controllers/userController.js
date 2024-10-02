@@ -1,6 +1,7 @@
 
 const axios = require('axios');
 const BASE_URL = "http://localhost:8081/api/v1/users"; 
+const axiosInstance = require('../utils/axiosInstance');
 const logger = require('../utils/logger');
 const FormData = require('form-data');
 const fs = require('fs');
@@ -82,3 +83,18 @@ exports.deleteUser = async (req, res, next) => {
         next(error);
     }
 };
+
+exports.getUserDetails = async (req, res) => {
+    try {
+      const { userId, cognitoId } = req.user; 
+  
+      const response = await axiosInstance.post('/process-user', {
+        userId,
+        cognitoId
+      });
+  
+      return res.json(response.data);
+    } catch (error) {
+      return res.status(500).json({ message: 'Error processing user' });
+    }
+  };
